@@ -5,12 +5,11 @@
 
 template <typename T>
 class ExpandList {
-private:
       T* data;
       size_t capacity;
 
-      void expand(size_t min_capacity) {
-            size_t new_capacity = std::max(capacity * 2, min_capacity);
+      void expand(const size_t min_capacity) {
+            const size_t new_capacity = std::max(capacity * 2, min_capacity);
             T* new_data = new T[new_capacity];
             for (size_t i = 0; i < capacity; ++i) {
                   new_data[i] = data[i];
@@ -21,8 +20,8 @@ private:
       }
 
 public:
-      ExpandList(size_t initial_capacity = 4)
-            : capacity(initial_capacity), data(new T[initial_capacity]) {
+      explicit ExpandList(const size_t initial_capacity = 4)
+            : data(new T[initial_capacity]), capacity(initial_capacity) {
       }
 
       ~ExpandList() {

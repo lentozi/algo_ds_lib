@@ -9,7 +9,7 @@ public:
 	public:
 		T data;
 		SingleNode* next;
-		SingleNode(const T& value) : data(value), next(nullptr) {}
+		explicit SingleNode(const T& value) : data(value), next(nullptr) {}
 
 		friend std::ostream& operator<<(std::ostream& os, const SingleNode& node) {
 			os << "SingleNode(data: " << node.data << ")";
@@ -22,7 +22,7 @@ public:
 		T data;
 		DoubleNode* prev;
 		DoubleNode* next;
-		DoubleNode(const T& value) : data(value), prev(nullptr), next(nullptr) {}
+		explicit DoubleNode(const T& value) : data(value), prev(nullptr), next(nullptr) {}
 
 		friend std::ostream& operator<<(std::ostream& os, const DoubleNode& node) {
 			os << "DoubleNode(data: " << node.data << ")";

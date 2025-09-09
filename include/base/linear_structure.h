@@ -14,10 +14,10 @@ public:
 	virtual void remove(int index, T& value) = 0;
 	virtual T& at(int index) = 0;
 	virtual int locate(const T& value) const = 0;
-	virtual bool empty() const = 0;
-	virtual size_t size() const = 0;
+	[[nodiscard]] virtual bool empty() const = 0;
+	[[nodiscard]] virtual size_t size() const = 0;
 
-	friend std::ostream& operator<<(std::ostream& os, const LinearStructure<T>& s) {
+	friend std::ostream& operator<<(std::ostream& os, const LinearStructure& s) {
 		s.print();
 		return os;
 	}

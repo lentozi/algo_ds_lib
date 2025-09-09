@@ -1,18 +1,16 @@
 ﻿#pragma once
-#include "sqlist.h"
 #include "utils/expand_list.h"
 
 template <typename T>
-class SLinkList : public LinearStructure<T> {
+class SLinkList final : public LinearStructure<T> {
 
-private:
 	class StaticNode {
 	public:
 		T data;
 		int next;
 		bool valid;
 
-		StaticNode(const T& value = NULL) : data(value), next(-1), valid(true) {}
+		explicit StaticNode(const T& value = NULL) : data(value), next(-1), valid(true) {}
 
 		friend std::ostream& operator<<(std::ostream& os, const StaticNode& node) {
 			os << "StaticNode(data: " << node.data << ")";
@@ -27,14 +25,14 @@ private:
 	void print() const override;
 
 public:
-	SLinkList(std::string name, size_t initial_capacity = 10);
-	~SLinkList();
+	explicit SLinkList(std::string name, size_t initial_capacity = 10);
+	~SLinkList() override;
 	void insert(int index, const T& value) override;
 	void remove(int index, T& value) override;
 	T& at(int index) override;
 	int locate(const T& value) const override;
-	bool empty() const override;
-	size_t size() const override;
+	[[nodiscard]] bool empty() const override;
+	[[nodiscard]] size_t size() const override;
 };
 
 #include "slinklist.tpp"

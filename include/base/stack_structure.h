@@ -15,14 +15,16 @@ public:
 	// 将数据元素出栈
 	virtual void pop(T& value) = 0;
 	// 获取栈顶元素
-	virtual void get_top(T& value) = 0;
+	virtual void get_top(T& value) const = 0;
 	// 判断栈是否为空
-	virtual bool empty() const = 0;
+	[[nodiscard]] virtual bool empty() const = 0;
 	// 获取栈元素个数
-	virtual size_t size() const = 0;
+	[[nodiscard]] virtual size_t size() const = 0;
 
-	friend std::ostream& operator<<(std::ostream& os, const StackStructure<T>& s) {
+	friend std::ostream& operator<<(std::ostream& os, const StackStructure& s) {
 		s.print();
 		return os;
 	}
 };
+
+#include "stack/sqstack.h"

@@ -1,10 +1,9 @@
-﻿#include <cstdlib>
+﻿#pragma once
 #include <iostream>
 #include <stdexcept>
 
 template <typename T>
-SLinkList<T>::SLinkList(std::string name, size_t initial_capacity)
-	: length(0) {
+SLinkList<T>::SLinkList(std::string name, size_t initial_capacity) {
 	if (initial_capacity == 0) {
 		throw std::invalid_argument("Initial capacity must be greater than 0");
 	}
@@ -21,7 +20,7 @@ SLinkList<T>::~SLinkList() {
 }
 
 template <typename T>
-void SLinkList<T>::insert(int index, const T& value) {
+void SLinkList<T>::insert(const int index, const T& value) {
 	if (index < 0 || index > length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -50,7 +49,7 @@ void SLinkList<T>::insert(int index, const T& value) {
 }
 
 template <typename T>
-void SLinkList<T>::remove(int index, T& value) {
+void SLinkList<T>::remove(const int index, T& value) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -68,13 +67,13 @@ void SLinkList<T>::remove(int index, T& value) {
 }
 
 template <typename T>
-T& SLinkList<T>::at(int index) {
+T& SLinkList<T>::at(const int index) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
 
 	int link_index = (*static_list)[0].next;
-	for (int i = 0; i < index; ++i, link_index = (*static_list)[link_index].next);
+	for (int i = 0; i < index; ++i, link_index = (*static_list)[link_index].next) {}
 	return (*static_list)[link_index].data;
 }
 

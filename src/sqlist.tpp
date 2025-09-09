@@ -1,4 +1,4 @@
-﻿#include <cstdlib>
+﻿#pragma once
 #include <stdexcept>
 #include <iostream>
 
@@ -8,7 +8,6 @@ SqList<T>::SqList(std::string name, size_t initial_capacity)
 	if (initial_capacity == 0) {
 		throw std::invalid_argument("Initial capacity must be greater than 0");
 	}
-	// data = (T*)std::malloc(capacity * sizeof(T));
 	data = new ExpandList<T>(initial_capacity);
 	this->name = name;
 }

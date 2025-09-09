@@ -1,10 +1,10 @@
-﻿#include <cstdlib>
+﻿#pragma once
 #include <iostream>
 #include <stdexcept>
 
 template <typename T>
 LinkList<T>::LinkList(std::string name) {
-	head = (SingleNode<T>*)malloc(sizeof(SingleNode<T>)); // 创建头节点，分配内存
+	head = static_cast<SingleNode<T> *>(malloc(sizeof(SingleNode<T>))); // 创建头节点，分配内存
 	if (!head) {
 		throw std::bad_alloc();
 	}
@@ -24,7 +24,7 @@ LinkList<T>::~LinkList() {
 }
 
 template <typename T>
-void LinkList<T>::insert(int index, const T& value) {
+void LinkList<T>::insert(const int index, const T& value) {
 	if (index < 0 || index > length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -32,7 +32,7 @@ void LinkList<T>::insert(int index, const T& value) {
 	for (int i = 0; i < index; ++i) {
 		current = current->next;
 	}
-	SingleNode<T>* new_node = (SingleNode<T>*)malloc(sizeof(SingleNode<T>));
+	auto* new_node = static_cast<SingleNode<T> *>(malloc(sizeof(SingleNode<T>)));
 	if (!new_node) {
 		throw std::bad_alloc();
 	}
@@ -43,7 +43,7 @@ void LinkList<T>::insert(int index, const T& value) {
 }
 
 template <typename T>
-void LinkList<T>::remove(int index, T& value) {
+void LinkList<T>::remove(const int index, T& value) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -59,7 +59,7 @@ void LinkList<T>::remove(int index, T& value) {
 }
 
 template <typename T>
-T& LinkList<T>::at(int index) {
+T& LinkList<T>::at(const int index) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -109,7 +109,7 @@ void LinkList<T>::insert_next_node(SingleNode<T>* node, const T& value) {
 	if (!node) {
 		throw std::invalid_argument("Node is null");
 	}
-	SingleNode<T>* new_node = (SingleNode<T>*)malloc(sizeof(SingleNode<T>));
+	auto* new_node = static_cast<SingleNode<T> *>(malloc(sizeof(SingleNode<T>)));
 	if (!new_node) {
 		throw std::bad_alloc();
 	}
@@ -125,7 +125,7 @@ void LinkList<T>::insert_prior_node(SingleNode<T>* node, const T& value) {
 	if (!node || node == head) {
 		throw std::invalid_argument("Node is null or head");
 	}
-	SingleNode<T>* new_node = (SingleNode<T>*)malloc(sizeof(SingleNode<T>));
+	auto* new_node = static_cast<SingleNode<T> *>(malloc(sizeof(SingleNode<T>)));
 	if (!new_node) {
 		throw std::bad_alloc();
 	}
@@ -147,6 +147,7 @@ void LinkList<T>::delete_node(SingleNode<T>* node, T& value) {
 		node->value = node->next->data;
 		SingleNode<T>* to_delete = node->next;
 		node->next = to_delete->next;
+		value = to_delete->data;
 		free(to_delete);
 	}
 	else {
@@ -166,7 +167,7 @@ void LinkList<T>::delete_node(SingleNode<T>* node, T& value) {
 }
 
 template <typename T>
-SingleNode<T>* LinkList<T>::find_node(int index) const {
+SingleNode<T>* LinkList<T>::find_node(const int index) const {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}

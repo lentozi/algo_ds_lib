@@ -1,4 +1,5 @@
 ﻿#include "base/linear_structure.h"
+#include "base/stack_structure.h"
 #include <iostream>
 
 using namespace std;
@@ -20,8 +21,8 @@ int main() {
 	dlinklist->insert(0, 42);
 	dlinklist->insert(1, 43);
 	dlinklist->insert(1, 44);
-	DoubleNode<int>* node = static_cast<DLinkList<int>*>(dlinklist)->find_node(1);
-	static_cast<DLinkList<int>*>(dlinklist)->insert_prior_node(node, 100);
+	DoubleNode<int>* node = dynamic_cast<DLinkList<int>*>(dlinklist)->find_node(1);
+	dynamic_cast<DLinkList<int>*>(dlinklist)->insert_prior_node(node, 100);
 	std::cout << *dlinklist << std::endl;
 
 	LinearStructure<int>* slinklist = new SLinkList<int>("SLinkList", 10);
@@ -29,8 +30,14 @@ int main() {
 	slinklist->insert(1, 43);
 	slinklist->insert(1, 44);
 	std::cout << *slinklist << std::endl;
-	std::cout << slinklist->locate(43) << std::endl;
+	std::cout << "locate number 43: " << slinklist->locate(43) << std::endl;
 
-	delete list, linklist, dlinklist, slinklist;
+	StackStructure<int>* sqstack = new SqStack<int>("SqStack", 10);
+	sqstack->push(42);
+	sqstack->push(43);
+	sqstack->push(44);
+	std::cout << *sqstack << std::endl;
+
+	delete list, linklist, dlinklist, slinklist, sqstack;
 	return 0;
 }
