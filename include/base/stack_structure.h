@@ -1,7 +1,16 @@
 ﻿#pragma once
 #include <string>
 
-// 栈数据结构抽象类
+/**
+ * 栈数据结构抽象类
+ *
+ * <p>
+ * 栈：只允许一段进行插入或删除的线性表，具有后进先出的特性
+ * <br/>
+ * 栈的数学性质：当 n 个不同元素入栈时，出栈元素的不同排列个数为 $\frac{1}{n+1}C^{n}_{2n}$
+ * </p>
+ * @tparam T 数据元素类型
+ */
 template <typename T>
 class StackStructure {
 protected:

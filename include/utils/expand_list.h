@@ -43,7 +43,7 @@ public:
             return data[index];
       }
 
-      size_t get_capacity() const {
+      [[nodiscard]] size_t get_capacity() const {
             return capacity;
       }
 };
