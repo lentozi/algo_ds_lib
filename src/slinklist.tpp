@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 
-template <typename T>
+template<typename T>
 SLinkList<T>::SLinkList(std::string name, size_t initial_capacity) {
 	if (initial_capacity == 0) {
 		throw std::invalid_argument("Initial capacity must be greater than 0");
@@ -14,13 +14,13 @@ SLinkList<T>::SLinkList(std::string name, size_t initial_capacity) {
 	this->name = name;
 }
 
-template <typename T>
+template<typename T>
 SLinkList<T>::~SLinkList() {
 	delete static_list;
 }
 
-template <typename T>
-void SLinkList<T>::insert(const int index, const T& value) {
+template<typename T>
+void SLinkList<T>::insert(const int index, const T &value) {
 	if (index < 0 || index > length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -48,8 +48,8 @@ void SLinkList<T>::insert(const int index, const T& value) {
 	++length;
 }
 
-template <typename T>
-void SLinkList<T>::remove(const int index, T& value) {
+template<typename T>
+void SLinkList<T>::remove(const int index, T &value) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -66,19 +66,20 @@ void SLinkList<T>::remove(const int index, T& value) {
 	--length;
 }
 
-template <typename T>
-T& SLinkList<T>::at(const int index) {
+template<typename T>
+T &SLinkList<T>::at(const int index) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
 
 	int link_index = (*static_list)[0].next;
-	for (int i = 0; i < index; ++i, link_index = (*static_list)[link_index].next) {}
+	for (int i = 0; i < index; ++i, link_index = (*static_list)[link_index].next) {
+	}
 	return (*static_list)[link_index].data;
 }
 
-template <typename T>
-int SLinkList<T>::locate(const T& value) const {
+template<typename T>
+int SLinkList<T>::locate(const T &value) const {
 	int range_index = 0;
 	for (int i = 0; i < length && !(*static_list)[range_index].valid; ++i) {
 		range_index = (*static_list)[range_index].next;
@@ -87,17 +88,17 @@ int SLinkList<T>::locate(const T& value) const {
 	return -1;
 }
 
-template <typename T>
+template<typename T>
 bool SLinkList<T>::empty() const {
 	return length == 0;
 }
 
-template <typename T>
+template<typename T>
 size_t SLinkList<T>::size() const {
 	return length;
 }
 
-template <typename T>
+template<typename T>
 void SLinkList<T>::print() const {
 	std::cout << this->name << " (Length: " << length << "): ";
 	int range_index = 0;

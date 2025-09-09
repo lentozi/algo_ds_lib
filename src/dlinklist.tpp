@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 
-template <typename T>
+template<typename T>
 DLinkList<T>::DLinkList(std::string name) {
 	head = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
 	if (!head) {
@@ -14,22 +14,22 @@ DLinkList<T>::DLinkList(std::string name) {
 	this->length = 0;
 }
 
-template <typename T>
+template<typename T>
 DLinkList<T>::~DLinkList() {
-	DoubleNode<T>* current = head;
+	DoubleNode<T> *current = head;
 	while (current) {
-		DoubleNode<T>* next = current->next;
+		DoubleNode<T> *next = current->next;
 		free(current);
 		current = next;
 	}
 }
 
-template <typename T>
-void DLinkList<T>::insert(const int index, const T& value) {
+template<typename T>
+void DLinkList<T>::insert(const int index, const T &value) {
 	if (index < 0 || index > length) {
 		throw std::out_of_range("Index out of range");
 	}
-	DoubleNode<T>* current = head;
+	DoubleNode<T> *current = head;
 	for (int i = 0; i < index; ++i) {
 		current = current->next;
 	}
@@ -37,7 +37,7 @@ void DLinkList<T>::insert(const int index, const T& value) {
 	if (!current) {
 		throw std::out_of_range("Index out of range");
 	}
-	auto* node = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
+	auto *node = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
 	if (!node) {
 		throw std::bad_alloc();
 	}
@@ -51,16 +51,16 @@ void DLinkList<T>::insert(const int index, const T& value) {
 	++length;
 }
 
-template <typename T>
-void DLinkList<T>::remove(const int index, T& value) {
+template<typename T>
+void DLinkList<T>::remove(const int index, T &value) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
-	DoubleNode<T>* current = head;
+	DoubleNode<T> *current = head;
 	for (int i = 0; i < index; ++i) {
 		current = current->next;
 	}
-	DoubleNode<T>* to_delete = current->next;
+	DoubleNode<T> *to_delete = current->next;
 	if (!to_delete) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -74,21 +74,21 @@ void DLinkList<T>::remove(const int index, T& value) {
 	--length;
 }
 
-template <typename T>
-T& DLinkList<T>::at(const int index) {
+template<typename T>
+T &DLinkList<T>::at(const int index) {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
-	DoubleNode<T>* current = head->next;
+	DoubleNode<T> *current = head->next;
 	for (int i = 0; i < index; ++i) {
 		current = current->next;
 	}
 	return current->data;
 }
 
-template <typename T>
-int DLinkList<T>::locate(const T& value) const {
-	DoubleNode<T>* current = head->next;
+template<typename T>
+int DLinkList<T>::locate(const T &value) const {
+	DoubleNode<T> *current = head->next;
 	for (int i = 0; current != nullptr && i < length; current = current->next, ++i) {
 		if (current->data == value) {
 			return i;
@@ -97,19 +97,19 @@ int DLinkList<T>::locate(const T& value) const {
 	return -1;
 }
 
-template <typename T>
+template<typename T>
 bool DLinkList<T>::empty() const {
 	return length == 0;
 }
 
-template <typename T>
+template<typename T>
 size_t DLinkList<T>::size() const {
 	return length;
 }
 
-template <typename T>
+template<typename T>
 void DLinkList<T>::print() const {
-	DoubleNode<T>* current = head->next;
+	DoubleNode<T> *current = head->next;
 	std::cout << this->name << " (Length: " << length << "): ";
 	while (current) {
 		std::cout << *current << " ";
@@ -117,9 +117,9 @@ void DLinkList<T>::print() const {
 	}
 }
 
-template <typename T>
-void DLinkList<T>::insert_next_node(DoubleNode<T>* node, const T& value) {
-	auto* current = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
+template<typename T>
+void DLinkList<T>::insert_next_node(DoubleNode<T> *node, const T &value) {
+	auto *current = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
 	current->data = value;
 	current->prev = node;
 	current->next = node->next;
@@ -130,9 +130,9 @@ void DLinkList<T>::insert_next_node(DoubleNode<T>* node, const T& value) {
 	++length;
 }
 
-template <typename T>
-void DLinkList<T>::insert_prior_node(DoubleNode<T>* node, const T& value) {
-	auto* current = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
+template<typename T>
+void DLinkList<T>::insert_prior_node(DoubleNode<T> *node, const T &value) {
+	auto *current = static_cast<DoubleNode<T> *>(malloc(sizeof(DoubleNode<T>)));
 	if (!current) {
 		throw std::bad_alloc();
 	}
@@ -145,9 +145,9 @@ void DLinkList<T>::insert_prior_node(DoubleNode<T>* node, const T& value) {
 	++length;
 }
 
-template <typename T>
-void DLinkList<T>::delete_node(DoubleNode<T>* node, T& value) {
-	DoubleNode<T>* prior = node->prev;
+template<typename T>
+void DLinkList<T>::delete_node(DoubleNode<T> *node, T &value) {
+	DoubleNode<T> *prior = node->prev;
 	value = node->data;
 	prior->next = node->next;
 	if (prior->next) {
@@ -157,12 +157,13 @@ void DLinkList<T>::delete_node(DoubleNode<T>* node, T& value) {
 	--length;
 }
 
-template <typename T>
-DoubleNode<T>* DLinkList<T>::find_node(const int index) const {
+template<typename T>
+DoubleNode<T> *DLinkList<T>::find_node(const int index) const {
 	if (index < 0 || index >= length) {
 		throw std::out_of_range("Index out of range");
 	}
-	DoubleNode<T>* current = head->next;
-	for (int i = 0; i < index; ++i, current = current->next) {}
+	DoubleNode<T> *current = head->next;
+	for (int i = 0; i < index; ++i, current = current->next) {
+	}
 	return current;
 }

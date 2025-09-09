@@ -4,15 +4,16 @@
 /**
  * 栈的顺序存储结构
  */
-template <typename T>
+template<typename T>
 class SqStack final : public StackStructure<T> {
-	ExpandList<T>* data;		// 栈中元素
-	int top = -1;			// 栈顶元素指针
-	int max_size = -1;		// 栈最大长度，如果设置为 -1 则不做限制
+	ExpandList<T> *data; // 栈中元素
+	int top = -1; // 栈顶元素指针
+	int max_size = -1; // 栈最大长度，如果设置为 -1 则不做限制
 	void print() const override;
 
 public:
 	explicit SqStack(std::string name, size_t initial_capacity = 10, int max_size = -1);
+
 	~SqStack() override;
 
 	/**
@@ -25,7 +26,7 @@ public:
 	 * </p>
 	 * @param value 压入栈的元素
 	 */
-	void push(const T& value) override;
+	void push(const T &value) override;
 
 	/**
 	 * 将元素出栈
@@ -37,7 +38,7 @@ public:
 	 * </p>
 	 * @param value 出栈返回的元素
 	 */
-	void pop(T& value) override;
+	void pop(T &value) override;
 
 	/**
 	 * 获取栈顶元素
@@ -47,7 +48,7 @@ public:
 	 * </p>
 	 * @param value 返回的栈顶元素
 	 */
-	void get_top(T& value) const override;
+	void get_top(T &value) const override;
 
 	/**
 	 * 判断栈是否为空
