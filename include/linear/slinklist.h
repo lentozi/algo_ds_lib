@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "sqlist.h"
+#include "utils/expand_list.h"
 
 template <typename T>
 class SLinkList : public LinearStructure<T> {
@@ -11,7 +12,7 @@ private:
 		int next;
 		bool valid;
 
-		StaticNode(const T& value) : data(value), next(-1), valid(true) {}
+		StaticNode(const T& value = NULL) : data(value), next(-1), valid(true) {}
 
 		friend std::ostream& operator<<(std::ostream& os, const StaticNode& node) {
 			os << "StaticNode(data: " << node.data << ")";
@@ -19,9 +20,10 @@ private:
 		}
 	};
 
-	StaticNode* static_list;			// 静态链表数组
+	ExpandList<StaticNode>* static_list;
+	// StaticNode* static_list;			// 静态链表数组
 	size_t length = 0;				// 当前静态链表的长度
-	size_t capacity;
+	// size_t capacity;
 	void print() const override;
 
 public:

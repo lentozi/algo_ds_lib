@@ -1,14 +1,17 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
+#include "utils/expand_list.h"
 
 
 template <typename T>
 class SqList : public LinearStructure<T> {
 private:
-	T* data;			// ´æ´¢ÏßĞÔ±íÔªËØµÄÊı×é
-	size_t length;		// µ±Ç°ÏßĞÔ±í³¤¶È
-	size_t capacity;		// µ±Ç°ÏßĞÔ±íÈİÁ¿
+	// T* data;			// å­˜å‚¨çº¿æ€§è¡¨å…ƒç´ çš„æ•°ç»„
+	size_t length;		// å½“å‰çº¿æ€§è¡¨é•¿åº¦
+	// size_t capacity;		// å½“å‰çº¿æ€§è¡¨å®¹é‡
+	ExpandList<T>* data;
+
 
 public:
 	SqList(std::string name, size_t initial_capacity = 10);

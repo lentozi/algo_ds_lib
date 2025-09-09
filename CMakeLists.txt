@@ -19,7 +19,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 # 将源代码添加到此项目的可执行文件。
 add_executable (main
  "algo_ds_lib.cpp"
- "include/linear/slinklist.h" "include/base/stack_structure.h" "include/utils/expand_list.h")
+)
 
 target_include_directories(main
     PRIVATE
