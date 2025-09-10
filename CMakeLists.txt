@@ -27,28 +27,40 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(main
-        test/test_sq_list.cpp
-        test/test_link_list.cpp
-        test/test_dlink_list.cpp
-        test/test_slink_list.cpp
-        test/test_sq_stack.cpp
-)
+# SqList
+add_executable(test_sq_list test/test_sq_list.cpp)
+target_link_libraries(test_sq_list gtest_main)
+add_test(NAME test_sq_list COMMAND test_sq_list)
+target_include_directories(test_sq_list PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-target_link_libraries(main
-        gtest_main
-)
-target_include_directories(main PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
-)
+# LinkList
+add_executable(test_link_list test/test_link_list.cpp)
+target_link_libraries(test_link_list gtest_main)
+add_test(NAME test_link_list COMMAND test_link_list)
+target_include_directories(test_link_list PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-add_test(NAME main COMMAND main)
+# DLinkList
+add_executable(test_dlink_list test/test_dlink_list.cpp)
+target_link_libraries(test_dlink_list gtest_main)
+add_test(NAME test_dlink_list COMMAND test_dlink_list)
+target_include_directories(test_dlink_list PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-target_include_directories(main
-        PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
-)
+# SLinkList
+add_executable(test_slink_list test/test_slink_list.cpp)
+target_link_libraries(test_slink_list gtest_main)
+add_test(NAME test_slink_list COMMAND test_slink_list)
+target_include_directories(test_slink_list PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+# SqStack
+add_executable(test_sq_stack test/test_sq_stack.cpp)
+target_link_libraries(test_sq_stack gtest_main)
+add_test(NAME test_sq_stack COMMAND test_sq_stack)
+target_include_directories(test_sq_stack PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-    set_property(TARGET main PROPERTY CXX_STANDARD 20)
+    set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 20)
+    set_property(TARGET test_link_list PROPERTY CXX_STANDARD 20)
+    set_property(TARGET test_dlink_list PROPERTY CXX_STANDARD 20)
+    set_property(TARGET test_slink_list PROPERTY CXX_STANDARD 20)
+    set_property(TARGET test_sq_stack PROPERTY CXX_STANDARD 20)
 endif ()
