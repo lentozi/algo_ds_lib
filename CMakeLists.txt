@@ -16,10 +16,33 @@ project(main)
 # 递归包含 include 目录下的所有子文件夹
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
-# 将源代码添加到此项目的可执行文件。
-add_executable(main
-        "algo_ds_lib.cpp"
+# 下载并添加 GoogleTest
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/heads/main.zip
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(main
+        test/test_sq_list.cpp
+        test/test_link_list.cpp
+        test/test_dlink_list.cpp
+        test/test_slink_list.cpp
+        test/test_sq_stack.cpp
+)
+
+target_link_libraries(main
+        gtest_main
+)
+target_include_directories(main PRIVATE
+        ${PROJECT_SOURCE_DIR}/include
+)
+
+add_test(NAME main COMMAND main)
 
 target_include_directories(main
         PRIVATE
@@ -29,5 +52,3 @@ target_include_directories(main
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET main PROPERTY CXX_STANDARD 20)
 endif ()
-
-# TODO: 如有需要，请添加测试并安装目标。
