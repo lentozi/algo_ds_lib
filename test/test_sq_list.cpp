@@ -4,12 +4,20 @@
 #include <gtest/gtest.h>
 #include "base/linear_structure.h"
 
-TEST(SqListTest, InsertAndPrint) {
+TEST(SqListTest, InsertRemoveAndAt) {
     SqList<int> list("SequenceList", 10);
-    list.insert(0, 42);
-    list.insert(1, 43);
-    list.insert(1, 44);
-    EXPECT_EQ(list.locate(42), 0);
-    EXPECT_EQ(list.locate(44), 1);
-    EXPECT_EQ(list.locate(43), 2);
+    list.insert(0, 1);
+    list.insert(1, 2);
+    list.insert(1, 3); // List: 1, 3, 2
+    EXPECT_EQ(list.size(), 3);
+    EXPECT_EQ(list.at(0), 1);
+    EXPECT_EQ(list.at(1), 3);
+    EXPECT_EQ(list.at(2), 2);
+    int value;
+    list.remove(1, value); // List: 1, 2
+    EXPECT_EQ(list.size(), 2);
+    EXPECT_EQ(list.at(0), 1);
+    EXPECT_EQ(list.at(1), 2);
+    EXPECT_THROW(list.insert(5, 4), std::out_of_range); // Invalid index
+    EXPECT_THROW(list.remove(5, value), std::out_of_range); // Invalid index
 }

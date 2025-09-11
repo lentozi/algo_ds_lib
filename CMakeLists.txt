@@ -57,6 +57,12 @@ target_link_libraries(test_sq_stack gtest_main)
 add_test(NAME test_sq_stack COMMAND test_sq_stack)
 target_include_directories(test_sq_stack PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# SqQueue
+add_executable(test_sq_queue test/test_sq_queue.cpp)
+target_link_libraries(test_sq_queue gtest_main)
+add_test(NAME test_sq_queue COMMAND test_sq_queue)
+target_include_directories(test_sq_queue PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 20)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 20)
