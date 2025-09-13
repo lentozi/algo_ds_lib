@@ -63,6 +63,12 @@ target_link_libraries(test_sq_queue gtest_main)
 add_test(NAME test_sq_queue COMMAND test_sq_queue)
 target_include_directories(test_sq_queue PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# HString
+add_executable(test_hstring test/test_hstring.cpp)
+target_link_libraries(test_hstring gtest_main)
+add_test(NAME test_hstring COMMAND test_hstring)
+target_include_directories(test_hstring PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 20)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 20)
