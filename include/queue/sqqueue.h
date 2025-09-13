@@ -19,8 +19,24 @@ public:
 
     ~SqQueue() override;
 
+    /**
+     * 将元素入队
+     *
+     * <p>
+     * 入队之前需要判断是否队满。如果rear指针加1后与front指针相等且flag为1，则表示队满，抛出异常
+     * </p>
+     * @param value 要入队的元素
+     */
     void enqueue(const T &value) override;
 
+    /**
+     * 将元素出队
+     *
+     * <p>
+     * 出队之前需要判断是否队空。如果rear指针加1后与front指针相等且flag为0，则表示队空，抛出异常
+     * </p>
+     * @param value 出队返回的元素
+     */
     void dequeue(T &value) override;
 
     void get_front(T &value) const override;
