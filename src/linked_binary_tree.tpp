@@ -4,10 +4,8 @@
 #pragma once
 
 template<typename T>
-LinkedBinaryTree<T>::LinkedBinaryTree(std::string name) {
-    this->name = name;
-    this->_traverse = TraverseType::PreOrder;
-}
+LinkedBinaryTree<T>::LinkedBinaryTree(std::string name)
+: TreeStructure<T>(name), _traverse(TraverseType::PreOrder) {}
 
 template<typename T>
 LinkedBinaryTree<T>::~LinkedBinaryTree() = default;

@@ -9,8 +9,7 @@ public:
         T data;
         SingleNode *next;
 
-        explicit SingleNode(const T &value) : data(value), next(nullptr) {
-        }
+        explicit SingleNode(const T &value) : data(value), next(nullptr) {}
 
         friend std::ostream &operator<<(std::ostream &os, const SingleNode &node) {
             os << "SingleNode(data: " << node.data << ")";
@@ -24,11 +23,24 @@ public:
         DoubleNode *prev;
         DoubleNode *next;
 
-        explicit DoubleNode(const T &value) : data(value), prev(nullptr), next(nullptr) {
-        }
+        explicit DoubleNode(const T &value) : data(value), prev(nullptr), next(nullptr) {}
 
         friend std::ostream &operator<<(std::ostream &os, const DoubleNode &node) {
             os << "DoubleNode(data: " << node.data << ")";
+            return os;
+        }
+    };
+
+    class ParentTreeNode {
+    public:
+        T data;
+        int parent_index;
+
+        explicit ParentTreeNode() : parent_index(0) {}
+        explicit ParentTreeNode(const T &value) : data(value), parent_index(-1) {}
+
+        friend std::ostream &operator<<(std::ostream &os, const ParentTreeNode &node) {
+            os << "ParentTreeNode(data: " << node.data << ", parent_index: " << node.parent_index << ")";
             return os;
         }
     };
@@ -43,6 +55,11 @@ public:
         T get_data() const {
             return data;
         }
+
+        friend std::ostream &operator<<(std::ostream &os, const TreeNode &node) {
+            os << "TreeNode(data: " << node.data << ")";
+            return os;
+        }
     };
 
     class BinaryTreeNode : public TreeNode {
@@ -53,7 +70,7 @@ public:
         explicit BinaryTreeNode(const T &value) : TreeNode(value), left(nullptr), right(nullptr) {}
 
         friend std::ostream &operator<<(std::ostream &os, const BinaryTreeNode &node) {
-            os << "TreeNode(data: " << node.data << ")";
+            os << "BinaryTreeNode(data: " << node.data << ")";
             return os;
         }
     };

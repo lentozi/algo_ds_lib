@@ -75,6 +75,12 @@ target_link_libraries(test_binary_tree gtest_main)
 add_test(NAME test_binary_tree COMMAND test_binary_tree)
 target_include_directories(test_binary_tree PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# ParentTree
+add_executable(test_parent_tree test/test_parent_tree.cpp)
+target_link_libraries(test_parent_tree gtest_main)
+add_test(NAME test_parent_tree COMMAND test_parent_tree)
+target_include_directories(test_parent_tree PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 11)

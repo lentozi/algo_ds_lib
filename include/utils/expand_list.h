@@ -46,4 +46,9 @@ public:
     [[nodiscard]] size_t get_capacity() const {
         return capacity;
     }
+
+    void clear() {
+        delete[] data;
+        data = new T[capacity];
+    }
 };

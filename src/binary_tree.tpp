@@ -15,9 +15,7 @@
  * @param name 二叉树的名称
  */
 template<typename T>
-BinaryTree<T>::BinaryTree(std::string name) {
-    this->name = name;
-}
+BinaryTree<T>::BinaryTree(std::string name) : TreeStructure<T>(name) {}
 
 /**
  * @brief 析构函数，释放二叉树资源。

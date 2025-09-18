@@ -3,8 +3,7 @@
 //
 #pragma once
 #include <string>
-#include <vector>
-#include <optional>
+#include <utility>
 
 template<typename T>
 class TreeStructure {
@@ -14,10 +13,11 @@ protected:
     virtual void print() const = 0;
 
 public:
-    virtual ~TreeStructure() = default;
+    explicit TreeStructure(std::string name) : name(std::move(name)) {}
 
-    // virtual void build_tree(std::vector<std::pair<T, std::vector<std::optional<T>>>> tree) = 0;
+    virtual ~TreeStructure() = default;
 };
 
+#include "tree/parent_tree.h"
 #include "tree/binary_tree.h"
 #include "tree/linked_binary_tree.h"
