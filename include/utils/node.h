@@ -32,4 +32,43 @@ public:
             return os;
         }
     };
+
+    class TreeNode {
+    protected:
+        T data;
+
+    public:
+        explicit TreeNode(const T &value) : data(value) {}
+
+        T get_data() const {
+            return data;
+        }
+    };
+
+    class BinaryTreeNode : public TreeNode {
+    public:
+        BinaryTreeNode *left;
+        BinaryTreeNode *right;
+
+        explicit BinaryTreeNode(const T &value) : TreeNode(value), left(nullptr), right(nullptr) {}
+
+        friend std::ostream &operator<<(std::ostream &os, const BinaryTreeNode &node) {
+            os << "TreeNode(data: " << node.data << ")";
+            return os;
+        }
+    };
+
+    class LinkedTreeNode : public BinaryTreeNode {
+    public:
+        int ltag = 0; // 左标志，0 表示孩子节点，1 表示线索
+        int rtag = 0; // 右标志，0 表示孩子节点，1 表示线索
+
+        explicit LinkedTreeNode(const T &value, const int ltag = 0, const int rtag = 0)
+            : BinaryTreeNode(value), ltag(ltag), rtag(rtag) {}
+
+        friend std::ostream &operator<<(std::ostream &os, const LinkedTreeNode &node) {
+            os << "LinkedTreeNode(data: " << node.data << ", ltag: " << node.ltag << ", rtag: " << node.rtag << ")";
+            return os;
+        }
+    };
 };

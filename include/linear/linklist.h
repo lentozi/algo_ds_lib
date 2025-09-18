@@ -2,7 +2,7 @@
 #include "utils/node.h"
 
 template<typename T>
-using SingleNode = Node<T>::SingleNode;
+using SingleNode = typename Node<T>::SingleNode;
 
 template<typename T>
 class LinkList final : public LinearStructure<T> {

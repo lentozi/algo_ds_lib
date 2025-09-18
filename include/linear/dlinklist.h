@@ -2,7 +2,7 @@
 #include "utils/node.h"
 
 template<typename T>
-using DoubleNode = Node<T>::DoubleNode;
+using DoubleNode = typename Node<T>::DoubleNode;
 
 // 双端链表
 template<typename T>
