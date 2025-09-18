@@ -34,8 +34,8 @@ public:
 
     LinkedBinaryTree<T>* to_linked_binary_tree(TraverseType type = TraverseType::PreOrder) const;
 
-    TreeIterator<T>* get_iterator(TraverseType type = TraverseType::PreOrder) const {
-        return new TreeIterator<T>(root, type);
+    TreeIterator<BinaryTreeNode<T>*, T>* get_iterator(TraverseType type = TraverseType::PreOrder) const {
+        return new TreeIterator<BinaryTreeNode<T>*, T>(root, type);
     }
 };
 

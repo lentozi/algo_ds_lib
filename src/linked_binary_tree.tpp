@@ -53,11 +53,12 @@ void LinkedBinaryTree<T>::build_tree(BinaryTreeNode<T> *binary_root, TraverseTyp
     delete queue, linked_queue;
 
     // 再根据遍历类型建立线索
-    auto* iterator = new TreeIterator<int>(linked_root, type);
+    auto* iterator = new TreeIterator<LinkedTreeNode<T>*, T>(linked_root, type);
     if (!iterator->has_next()) return;
-    auto* prev = static_cast<LinkedTreeNode<T> *>(iterator->next());
+    auto* prev = iterator->next();
+    LinkedTreeNode<T>* next = nullptr;
     while (iterator->has_next()) {
-        auto *next = static_cast<LinkedTreeNode<T> *>(iterator->next());
+        next = iterator->next();
         if (type == TraverseType::InOrder) {
             // 中序线索二叉树
             if (next->left == nullptr) {
@@ -84,12 +85,25 @@ void LinkedBinaryTree<T>::build_tree(BinaryTreeNode<T> *binary_root, TraverseTyp
         prev = next;
     }
 
+    _end = next;
     reset_iterator();
 }
 
 template<typename T>
 LinkedTreeNode<T>* LinkedBinaryTree<T>::begin() {
-    return root;
+    if (this->_traverse == TraverseType::InOrder) {
+        // 中序遍历，找到最左下节点
+        _current = root;
+        while (_current->left && _current->ltag == 0) { // 一直沿左子树走到底
+            _current = static_cast<LinkedTreeNode<T> *>(_current->left);
+        }
+    } else if (this->_traverse == TraverseType::PreOrder) {
+        // 前序遍历，根节点即为第一个节点
+        _current = root;
+    } else {
+        throw std::invalid_argument("Only InOrder and PreOrder traversal types are supported for threaded binary tree.");
+    }
+    return _current;
 }
 
 template<typename T>
@@ -104,7 +118,7 @@ bool LinkedBinaryTree<T>::is_end() const {
 
 template<typename T>
 void LinkedBinaryTree<T>::reset_iterator() {
-    _current = root;
+    _current = nullptr;
 }
 
 template<typename T>
@@ -112,20 +126,20 @@ LinkedTreeNode<T> *LinkedBinaryTree<T>::next() {
     if (!_current) return nullptr;
     if (this->_traverse == TraverseType::InOrder) {
         if (_current->rtag == 1) { // 右指针是线索
-            _current = _current->right;
+            _current = static_cast<LinkedTreeNode<T> *>(_current->right);
         } else { // 右指针是孩子节点，返回右子树的最左下节点
-            _current = _current->right;
+            _current = static_cast<LinkedTreeNode<T> *>(_current->right);
             while (_current && _current->ltag == 0) { // 一直沿左子树走到底
-                _current = _current->left;
+                _current = static_cast<LinkedTreeNode<T> *>(_current->left);
             }
         }
         return _current;
     }
     if (this->_traverse == TraverseType::PreOrder) {
         if (_current->ltag == 0) { // 左指针是孩子节点
-            _current = _current->left;
+            _current = static_cast<LinkedTreeNode<T> *>(_current->left);
         } else { // 右指针是孩子节点，或右指针是线索
-            _current = _current->right;
+            _current = static_cast<LinkedTreeNode<T> *>(_current->right);
         }
         return _current;
     }
