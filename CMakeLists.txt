@@ -81,6 +81,12 @@ target_link_libraries(test_parent_tree gtest_main)
 add_test(NAME test_parent_tree COMMAND test_parent_tree)
 target_include_directories(test_parent_tree PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# HuffmanTree
+add_executable(test_huffman_tree test/test_huffman_tree.cpp)
+target_link_libraries(test_huffman_tree gtest_main)
+add_test(NAME test_huffman_tree COMMAND test_huffman_tree)
+target_include_directories(test_huffman_tree PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 11)

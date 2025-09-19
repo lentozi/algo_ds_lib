@@ -20,4 +20,5 @@ public:
 
 #include "tree/parent_tree.h"
 #include "tree/binary_tree.h"
+#include "tree/huffman_tree.h"
 #include "tree/linked_binary_tree.h"
