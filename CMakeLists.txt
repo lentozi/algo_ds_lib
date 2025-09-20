@@ -99,6 +99,12 @@ target_link_libraries(test_matrix_graph gtest_main)
 add_test(NAME test_matrix_graph COMMAND test_matrix_graph)
 target_include_directories(test_matrix_graph PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# AdjacencyListGraph
+add_executable(test_adjacency_list_graph test/test_adjacency_list_graph.cpp)
+target_link_libraries(test_adjacency_list_graph gtest_main)
+add_test(NAME test_adjacency_list_graph COMMAND test_adjacency_list_graph)
+target_include_directories(test_adjacency_list_graph PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 11)
@@ -112,4 +118,5 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_huffman_tree PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_union_find_set PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_matrix_graph PROPERTY CXX_STANDARD 11)
+    set_property(TARGET test_adjacency_list_graph PROPERTY CXX_STANDARD 11)
 endif ()

@@ -1,8 +1,6 @@
 //
 // Created by LengTouZai on 2025/9/19.
 //
-#pragma once
-
 #include <string>
 #include <vector>
 

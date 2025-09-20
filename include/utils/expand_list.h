@@ -43,6 +43,13 @@ public:
         return data[index];
     }
 
+    const T &at(size_t index) const {
+        if (index >= capacity) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data[index];
+    }
+
     [[nodiscard]] size_t get_capacity() const {
         return capacity;
     }

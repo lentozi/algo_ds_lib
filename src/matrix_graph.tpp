@@ -125,8 +125,9 @@ int MatrixGraph<V, E>::get_degree(const V &vertex) const {
     if (!_vertices || !_edges) {
         throw std::runtime_error("Graph not built");
     }
-    if (has_direction)
+    if (has_direction) {
         return get_in_degree(vertex) + get_out_degree(vertex);
+    }
     return get_out_degree(vertex);
 }
 
