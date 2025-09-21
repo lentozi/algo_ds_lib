@@ -15,6 +15,8 @@ class AdjacencyList final : public GraphStructure<V, E> {
 
     void print() const override;
 
+    void find_vertex(const V &vertex, int &index) const;
+
 public:
     explicit AdjacencyList(std::string name, bool has_direction = false);
     ~AdjacencyList() override;
@@ -23,6 +25,17 @@ public:
     int get_degree(const V &vertex) const override;
     int get_in_degree(const V &vertex) const override;
     int get_out_degree(const V &vertex) const override;
+
+    bool adjacent(const V &v1, const V &v2) const override;
+    std::set<V> neighbors(const V &vertex) const override;
+
+    void insert_vertex(const V &vertex) override;
+    void remove_vertex(const V &vertex) override;
+    void insert_edge(const V &v1, const V &v2, const E &edge) override;
+    void remove_edge(const V &v1, const V &v2) override;
+
+    E get_edge(const V &v1, const V &v2) const override;
+    void set_edge(const V &v1, const V &v2, const E &edge) override;
 };
 
 #include "adjacency_list_graph.tpp"

@@ -48,14 +48,8 @@ void MatrixGraph<V, E>::build_graph(const std::vector<V> &vertices, const std::v
     for (const auto& edge : edges) {
         // 查找顶点的索引
         int start_index = -1, end_index = -1;
-        for (size_t i = 0; i < vertex_count; ++i) {
-            if (_vertices[i] == edge.first.first) {
-                start_index = static_cast<int>(i);
-            }
-            if (_vertices[i] == edge.first.second) {
-                end_index = static_cast<int>(i);
-            }
-        }
+        find_vertex_index(edge.first.first, start_index);
+        find_vertex_index(edge.first.second, end_index);
         _edges[start_index][end_index] = edge.second;
         if (!has_direction) {
             _edges[end_index][start_index] = edge.second; // 无向
@@ -72,16 +66,7 @@ int MatrixGraph<V, E>::get_in_degree(const V &vertex) const {
     int degree = 0;
     // 查找该顶点在数组中的索引
     int vertex_index = -1;
-    for (size_t i = 0; i < vertex_count; ++i) {
-        if (_vertices[i] == vertex) {
-            vertex_index = static_cast<int>(i);
-            break;
-        }
-    }
-
-    if (vertex_index == -1) {
-        throw std::invalid_argument("Vertex not found");
-    }
+    find_vertex_index(vertex, vertex_index);
 
     for (int i = 0; i < vertex_count; ++i) {
         if (_edges[i][vertex_index].has_value()) {
@@ -99,16 +84,7 @@ int MatrixGraph<V, E>::get_out_degree(const V &vertex) const {
     }
     int degree = 0;
     int vertex_index = -1;
-    for (size_t i = 0; i < vertex_count; ++i) {
-        if (_vertices[i] == vertex) {
-            vertex_index = static_cast<int>(i);
-            break;
-        }
-    }
-
-    if (vertex_index == -1) {
-        throw std::invalid_argument("Vertex not found");
-    }
+    find_vertex_index(vertex, vertex_index);
 
     for (int j = 0; j < vertex_count; ++j) {
         if (_edges[vertex_index][j].has_value()) {
@@ -151,4 +127,175 @@ void MatrixGraph<V, E>::print() const {
             }
         }
     }
+}
+
+template<typename V, typename E>
+bool MatrixGraph<V, E>::adjacent(const V &v1, const V &v2) const {
+    if (!_vertices || !_edges) {
+        throw std::runtime_error("Graph not built");
+    }
+    // 查找节点所在索引
+    int start_index = -1, end_index = -1;
+    find_vertex_index(v1, start_index);
+    find_vertex_index(v2, end_index);
+
+    return _edges[start_index][end_index].has_value();
+}
+
+template<typename V, typename E>
+std::set<V> MatrixGraph<V, E>::neighbors(const V &vertex) const {
+    int vertex_index = -1;
+    find_vertex_index(vertex, vertex_index);
+    std::set<V> neighbor_vertices;
+    for (size_t j = 0; j < vertex_count; ++j) {
+        if (_edges[vertex_index][j].has_value()) {
+            neighbor_vertices.insert(_vertices[j]);
+        }
+    }
+    if (has_direction) {
+        for (size_t i = 0; i < vertex_count; ++i) {
+            if (_edges[i][vertex_index].has_value()) {
+                neighbor_vertices.insert(_vertices[i]);
+            }
+        }
+    }
+    return neighbor_vertices;
+}
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::insert_vertex(const V &vertex) {
+    vertex_count += 1;
+    V *new_vertices = new V[vertex_count];
+    for (size_t i = 0; i < vertex_count - 1; ++i) {
+        new_vertices[i] = _vertices[i];
+    }
+    new_vertices[vertex_count - 1] = vertex;
+    delete[] _vertices;
+    _vertices = new_vertices;
+
+    auto **new_edges = new std::optional<E> *[vertex_count];
+    for (size_t i = 0; i < vertex_count; ++i) {
+        new_edges[i] = new std::optional<E>[vertex_count];
+        for (size_t j = 0; j < vertex_count; ++j) {
+            if (i < vertex_count - 1 && j < vertex_count - 1) {
+                new_edges[i][j] = _edges[i][j];
+            } else {
+                new_edges[i][j] = std::nullopt; // 新增的行和列初始化为无边
+            }
+        }
+    }
+    for (size_t i = 0; i < vertex_count - 1; ++i) {
+        delete[] _edges[i];
+    }
+    delete[] _edges;
+    _edges = new_edges;
+}
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::remove_vertex(const V &vertex) {
+    int vertex_index = -1;
+    find_vertex_index(vertex, vertex_index);
+
+    // 删除顶点
+    V *new_vertices = new V[vertex_count - 1];
+    for (size_t i = 0, j = 0; i < vertex_count; ++i) {
+        if (static_cast<int>(i) != vertex_index) {
+            new_vertices[j++] = _vertices[i];
+        }
+    }
+    delete[] _vertices;
+    _vertices = new_vertices;
+
+    // 删除对应的行和列
+    auto **new_edges = new std::optional<E> *[vertex_count - 1];
+    for (size_t i = 0, new_i = 0; i < vertex_count; ++i) {
+        // i 和 new_i 同步增加，除非 i 是被删除的行，被删除行之前 i 和 new_i 相同，之后 new_i 比 i 小 1
+        if (static_cast<int>(i) == vertex_index) continue;
+        new_edges[new_i] = new std::optional<E>[vertex_count - 1];
+        for (size_t j = 0, new_j = 0; j < vertex_count; ++j) {
+            if (static_cast<int>(j) == vertex_index) continue;
+            new_edges[new_i][new_j++] = _edges[i][j];
+        }
+        new_i++;
+    }
+    for (size_t i = 0; i < vertex_count; ++i) {
+        delete[] _edges[i];
+    }
+    delete[] _edges;
+    _edges = new_edges;
+
+    vertex_count -= 1;
+}
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::insert_edge(const V &v1, const V &v2, const E &edge) {
+    int start_index = -1, end_index = -1;
+    find_vertex_index(v1, start_index);
+    find_vertex_index(v2, end_index);
+
+    if (_edges[start_index][end_index].has_value()) {
+        throw std::runtime_error("Edge already exists");
+    }
+    _edges[start_index][end_index] = edge;
+    if (!has_direction) {
+        _edges[end_index][start_index] = edge; // 无向
+    }
+}
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::remove_edge(const V &v1, const V &v2) {
+    int start_index = -1, end_index = -1;
+    find_vertex_index(v1, start_index);
+    find_vertex_index(v2, end_index);
+
+    if (!_edges[start_index][end_index].has_value()) {
+        throw std::runtime_error("Edge does not exist");
+    }
+
+    _edges[start_index][end_index] = std::nullopt;
+    if (!has_direction) {
+        _edges[end_index][start_index] = std::nullopt; // 无向
+    }
+}
+
+template<typename V, typename E>
+E MatrixGraph<V, E>::get_edge(const V &v1, const V &v2) const {
+    int start_index = -1, end_index = -1;
+    find_vertex_index(v1, start_index);
+    find_vertex_index(v2, end_index);
+
+    if (!_edges[start_index][end_index].has_value()) {
+        throw std::runtime_error("Edge does not exist");
+    }
+
+    return _edges[start_index][end_index].value();
+}
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::set_edge(const V &v1, const V &v2, const E &edge) {
+    int start_index = -1, end_index = -1;
+    find_vertex_index(v1, start_index);
+    find_vertex_index(v2, end_index);
+
+    if (!_edges[start_index][end_index].has_value()) {
+        throw std::runtime_error("Edge does not exist");
+    }
+
+    _edges[start_index][end_index] = edge;
+    if (!has_direction) {
+        _edges[end_index][start_index] = edge; // 无向
+    }
+}
+
+
+template<typename V, typename E>
+void MatrixGraph<V, E>::find_vertex_index(const V &vertex, int &index) const {
+    index = -1;
+    for (size_t i = 0; i < vertex_count; ++i) {
+        if (_vertices[i] == vertex) {
+            index = static_cast<int>(i);
+            return;
+        }
+    }
+    throw std::invalid_argument("Vertex not found");
 }

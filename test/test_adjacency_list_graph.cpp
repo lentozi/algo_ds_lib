@@ -25,6 +25,12 @@ TEST(AdjacencyListGraphTest, BasicOperations) {
     EXPECT_EQ(graph->get_in_degree("C"), 1);
     EXPECT_EQ(graph->get_out_degree("C"), 0);
 
+    // 测试添加和删除
+    graph->insert_vertex("D");
+    graph->insert_edge("C", "D", 15);
+    EXPECT_EQ(graph->get_in_degree("D"), 1);
+    EXPECT_EQ(graph->get_out_degree("C"), 1);
+
     delete graph;
 
     // 无向图

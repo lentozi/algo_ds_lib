@@ -22,6 +22,17 @@ public:
     virtual int get_degree(const V &vertex) const = 0;
     virtual int get_in_degree(const V &vertex) const = 0;
     virtual int get_out_degree(const V &vertex) const = 0;
+
+    virtual bool adjacent(const V &v1, const V &v2) const = 0;
+    virtual std::set<V> neighbors(const V &vertex) const = 0;
+
+    virtual void insert_vertex(const V &vertex) = 0;
+    virtual void remove_vertex(const V &vertex) = 0;
+    virtual void insert_edge(const V &v1, const V &v2, const E &edge) = 0;
+    virtual void remove_edge(const V &v1, const V &v2) = 0;
+
+    virtual E get_edge(const V &v1, const V &v2) const = 0;
+    virtual void set_edge(const V &v1, const V &v2, const E &edge) = 0;
 };
 
 #include "graph/matrix_graph.h"
