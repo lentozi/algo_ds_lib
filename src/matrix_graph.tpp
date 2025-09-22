@@ -328,6 +328,7 @@ void MatrixGraph<V, E>::bfs_dis_rec() const {
     delete queue;
 }
 
+// 时间复杂度为 O(V^2)
 template<typename V, typename E>
 void MatrixGraph<V, E>::dfs_dis_rec() const {
     if (vertex_count == 0) {

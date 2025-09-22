@@ -6,7 +6,7 @@
 #include "base/stack_structure.h"
 
 template<typename V, typename E>
-AdjacencyList<V, E>::AdjacencyList(std::string name, bool has_direction)
+AdjacencyList<V, E>::AdjacencyList(std::string name, const bool has_direction)
     : GraphStructure<V, E>(name), vertex_table(nullptr), has_direction(has_direction) {
 }
 
@@ -379,6 +379,7 @@ void AdjacencyList<V, E>::bfs_dis_rec() const {
     delete queue;
 }
 
+// 时间复杂度为 O(V + E)
 template<typename V, typename E>
 void AdjacencyList<V, E>::dfs_dis_rec() const {
     if (vertex_count == 0) {
@@ -419,8 +420,10 @@ void AdjacencyList<V, E>::dfs_dis_rec() const {
     delete stack;
 }
 
-
-
+/**
+ * 可以发现一个有意思的现象，在非递归的 BFS 算法和 DFS 算法实现时，一个用栈，一个用队列，其余操作均相同。所以确定了 DFS 算法的输出结果后，
+ * BFS 算法输出结果的可能相当于固定了入栈顺序后出栈顺序可能的情况。对于二叉树的层序遍历（队列）和先序遍历（栈）道理是一样的。
+ */
 
 template<typename V, typename E>
 void AdjacencyList<V, E>::find_vertex(const V &vertex, int &index) const {
