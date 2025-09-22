@@ -37,6 +37,11 @@ TEST(AdjacencyListGraphTest, BasicOperations) {
     graph->insert_edge("C", "E", 10);
     graph->bfs_dis_rec();
 
+    // 测试 DFS
+    graph->insert_vertex("F");
+    graph->insert_edge("E", "F", 10);
+    graph->dfs_dis_rec();
+
     delete graph;
 
     // 无向图

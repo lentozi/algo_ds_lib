@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "base/queue_structure.h"
+#include "base/stack_structure.h"
 
 template<typename V, typename E>
 MatrixGraph<V, E>::MatrixGraph(std::string name, const bool has_direction)
@@ -291,6 +292,9 @@ void MatrixGraph<V, E>::set_edge(const V &v1, const V &v2, const E &edge) {
 // 时间复杂度为 O(V^2)
 template<typename V, typename E>
 void MatrixGraph<V, E>::bfs_dis_rec() const {
+    if (vertex_count == 0) {
+        return;
+    }
     auto* queue = new SqQueue<int>("vertex_queue");
     auto *visited = new int[vertex_count];
     // 初始化 visited 数组
@@ -307,6 +311,7 @@ void MatrixGraph<V, E>::bfs_dis_rec() const {
                 int current_index;
                 queue->dequeue(current_index);
                 std::cout << _vertices[current_index] << " ";
+                visited[current_index] = 2;
                 for (int j = 0; j < vertex_count; ++j) {
                     // 找到所有未被访问的邻接节点
                     if (_edges[current_index][j].has_value() && !visited[j]) {
@@ -323,6 +328,41 @@ void MatrixGraph<V, E>::bfs_dis_rec() const {
     delete queue;
 }
 
+template<typename V, typename E>
+void MatrixGraph<V, E>::dfs_dis_rec() const {
+    if (vertex_count == 0) {
+        return;
+    }
+    auto* stack = new SqStack<int>("vertex_stack");
+    // 0 表示未被访问、1 表示正在被访问、2 表示已经被访问
+    auto *visited = new int[vertex_count];
+    for (int i = 0; i < vertex_count; ++i) {
+        visited[i] = 0; // 初始化所有节点为未访问
+    }
+
+    for (int i = 0; i < vertex_count; ++i) {
+        if (!visited[i]) {
+            stack->push(i);
+            visited[i] = 1;
+            while (!stack->empty()) {
+                int current_index;
+                stack->pop(current_index);
+                std::cout << _vertices[current_index] << " ";
+                visited[current_index] = 2;
+                for (int j = 0; j < vertex_count; ++j) {
+                    // 寻找没有被访问过的邻接点
+                    if (_edges[current_index][j].has_value() && !visited[j]) {
+                        stack->push(j);
+                        visited[j] = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    delete[] visited;
+    delete stack;
+}
 
 template<typename V, typename E>
 void MatrixGraph<V, E>::find_vertex_index(const V &vertex, int &index) const {

@@ -39,6 +39,8 @@ public:
 
     // 广度优先遍历的非递归实现
     void bfs_dis_rec() const;
+    // 深度优先遍历的非递归实现
+    void dfs_dis_rec() const;
 };
 
 #include "adjacency_list_graph.tpp"

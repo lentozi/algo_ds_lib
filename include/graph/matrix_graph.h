@@ -41,7 +41,10 @@ public:
     E get_edge(const V &v1, const V &v2) const override;
     void set_edge(const V &v1, const V &v2, const E &edge) override;
 
+    // 广度优先遍历的非递归实现
     void bfs_dis_rec() const;
+    // 深度优先遍历的非递归实现
+    void dfs_dis_rec() const;
 };
 
 
