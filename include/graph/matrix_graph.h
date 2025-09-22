@@ -40,6 +40,8 @@ public:
 
     E get_edge(const V &v1, const V &v2) const override;
     void set_edge(const V &v1, const V &v2, const E &edge) override;
+
+    void bfs_dis_rec() const;
 };
 
 

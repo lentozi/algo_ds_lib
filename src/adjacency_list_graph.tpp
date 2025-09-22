@@ -2,6 +2,7 @@
 // Created by LengTouZai on 2025/9/20.
 //
 #pragma once
+#include "base/queue_structure.h"
 
 template<typename V, typename E>
 AdjacencyList<V, E>::AdjacencyList(std::string name, bool has_direction)
@@ -335,6 +336,41 @@ void AdjacencyList<V, E>::set_edge(const V &v1, const V &v2, const E &edge) {
     }
     throw std::runtime_error("Edge not found");
 }
+
+// 时间复杂度为 O(V + E)
+template<typename V, typename E>
+void AdjacencyList<V, E>::bfs_dis_rec() const {
+    auto* queue = new SqQueue<V>("vertex_queue");
+    const auto visited = new int[vertex_count];
+    for (int i = 0; i < vertex_count; ++i) {
+        visited[i] = 0; // 初始化所有节点为未访问
+    }
+    // 对所有节点都执行遍历
+    for (int i = 0; i < vertex_count; ++i) {
+        if (!visited[i]) {
+            // 当前节点还没有被访问
+            queue->enqueue(vertex_table->at(i).data);
+            visited[i] = 1;
+            while (!queue->empty()) {
+                V vertex;
+                queue->dequeue(vertex);
+                std::cout << vertex << " ";
+                auto* arc = vertex_table->at(i).first_arc;
+                while (arc) {
+                    if (!visited[arc->adjvex]) {
+                        queue->enqueue(vertex_table->at(arc->adjvex).data);
+                        visited[arc->adjvex] = 1;
+                    }
+                    arc = arc->next;
+                }
+            }
+        }
+    }
+    std::cout << std::endl;
+    delete[] visited;
+    delete queue;
+}
+
 
 
 template<typename V, typename E>

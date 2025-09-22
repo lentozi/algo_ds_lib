@@ -5,6 +5,7 @@
 #include <optional>
 #include <iostream>
 #include <stdexcept>
+#include "base/queue_structure.h"
 
 template<typename V, typename E>
 MatrixGraph<V, E>::MatrixGraph(std::string name, const bool has_direction)
@@ -285,6 +286,41 @@ void MatrixGraph<V, E>::set_edge(const V &v1, const V &v2, const E &edge) {
     if (!has_direction) {
         _edges[end_index][start_index] = edge; // 无向
     }
+}
+
+// 时间复杂度为 O(V^2)
+template<typename V, typename E>
+void MatrixGraph<V, E>::bfs_dis_rec() const {
+    auto* queue = new SqQueue<int>("vertex_queue");
+    auto *visited = new int[vertex_count];
+    // 初始化 visited 数组
+    for (size_t i = 0; i < vertex_count; ++i) {
+        visited[i] = 0;
+    }
+
+    for (int i = 0; i < vertex_count; ++i) {
+        if (!visited[i]) {
+            // 该节点还没有被访问
+            queue->enqueue(i);
+            visited[i] = 1;
+            while (!queue->empty()) {
+                int current_index;
+                queue->dequeue(current_index);
+                std::cout << _vertices[current_index] << " ";
+                for (int j = 0; j < vertex_count; ++j) {
+                    // 找到所有未被访问的邻接节点
+                    if (_edges[current_index][j].has_value() && !visited[j]) {
+                        queue->enqueue(j);
+                        visited[j] = 1;
+                    }
+                }
+            }
+        }
+    }
+    std::cout << std::endl;
+
+    delete[] visited;
+    delete queue;
 }
 
 

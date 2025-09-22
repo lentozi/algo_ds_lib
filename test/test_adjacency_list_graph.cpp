@@ -31,6 +31,12 @@ TEST(AdjacencyListGraphTest, BasicOperations) {
     EXPECT_EQ(graph->get_in_degree("D"), 1);
     EXPECT_EQ(graph->get_out_degree("C"), 1);
 
+    // 测试 BFS
+    graph->insert_edge("A", "D", 15);
+    graph->insert_vertex("E");
+    graph->insert_edge("C", "E", 10);
+    graph->bfs_dis_rec();
+
     delete graph;
 
     // 无向图
