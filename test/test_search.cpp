@@ -21,4 +21,23 @@ TEST(SeqSearchTest, SeqSearch) {
 
     delete seq_searcher;
     delete list;
+
+    list = new SqList<int>("SequenceList", 10);
+    // 第一个位置存放元素，并要求线性表有序
+    list->insert(0, 1);
+    list->insert(1, 2);
+    list->insert(2, 3);
+    list->insert(3, 5);
+    list->insert(4, 7);
+    list->insert(5, 8);
+
+    const auto* binary_searcher = new BinarySearch(list);
+
+    EXPECT_EQ(binary_searcher->search(1), 0);
+    EXPECT_EQ(binary_searcher->search(2), 1);
+    EXPECT_EQ(binary_searcher->search(5), 3);
+    EXPECT_EQ(binary_searcher->search(6), -1);
+
+    delete binary_searcher;
+    delete list;
 }

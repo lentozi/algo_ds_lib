@@ -19,3 +19,4 @@ public:
 };
 
 #include "search/seq_search.h"
+#include "search/binary_search.h"
