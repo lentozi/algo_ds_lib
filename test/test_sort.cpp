@@ -15,8 +15,8 @@ TEST(SortTest, Sort) {
     list->insert(1, 11);
     list->insert(1, 2);
 
-    const auto* sorter = new InsertSort(list);
-    sorter->sort(true);
+    const auto* insert_sorter = new InsertSort(list);
+    insert_sorter->sort(true);
 
     EXPECT_EQ(list->at(1), 2);
     EXPECT_EQ(list->at(2), 5);
@@ -25,6 +25,29 @@ TEST(SortTest, Sort) {
     EXPECT_EQ(list->at(5), 11);
     EXPECT_EQ(list->at(6), 20);
 
+    delete insert_sorter;
     delete list;
-    delete sorter;
+
+    list = new SqList<int>("SequenceList", 10);
+    // 要求第一个位置不存放元素
+    list->insert(0, -1);
+    list->insert(1, 9);
+    list->insert(1, 7);
+    list->insert(1, 20);
+    list->insert(1, 5);
+    list->insert(1, 11);
+    list->insert(1, 2);
+
+    const auto* binary_insert_sorter = new BinaryInsertSort(list);
+    binary_insert_sorter->sort(true);
+
+    EXPECT_EQ(list->at(1), 2);
+    EXPECT_EQ(list->at(2), 5);
+    EXPECT_EQ(list->at(3), 7);
+    EXPECT_EQ(list->at(4), 9);
+    EXPECT_EQ(list->at(5), 11);
+    EXPECT_EQ(list->at(6), 20);
+
+    delete binary_insert_sorter;
+    delete list;
 }
