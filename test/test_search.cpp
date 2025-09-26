@@ -4,7 +4,7 @@
 #include "base/search_algorithm.h"
 #include "gtest/gtest.h"
 
-TEST(SeqSearchTest, SeqSearch) {
+TEST(SearchTest, Search) {
     LinearStructure<int>* list = new SqList<int>("SequenceList", 10);
     // 第一个位置不存放元素
     list->insert(0, -1);
