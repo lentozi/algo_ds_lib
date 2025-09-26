@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 
-#include "base/linear_structure.h"
 #include "utils/expand_list.h"
 
 template<typename T>

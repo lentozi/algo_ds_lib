@@ -71,6 +71,18 @@ T &LinkList<T>::at(const int index) {
 }
 
 template<typename T>
+void LinkList<T>::set(const int index, T value) {
+	if (index < 0 || index >= length) {
+		throw std::out_of_range("Index out of range");
+	}
+	SingleNode<T> *current = head->next;
+	for (int i = 0; i < index; ++i) {
+		current = current->next;
+	}
+	current->data = value;
+}
+
+template<typename T>
 int LinkList<T>::locate(const T &value) const {
 	SingleNode<T> *current = head->next;
 	int index = 0;

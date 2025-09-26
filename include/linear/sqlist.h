@@ -6,9 +6,7 @@
 
 template<typename T>
 class SqList final : public LinearStructure<T> {
-	// T* data;			// 存储线性表元素的数组
 	size_t length; // 当前线性表长度
-	// size_t capacity;		// 当前线性表容量
 	ExpandList<T> *data;
 
 public:
@@ -23,6 +21,8 @@ public:
 	T &at(int index) override;
 
 	int locate(const T &value) const override;
+
+	void set(int index, T value);
 
 	[[nodiscard]] bool empty() const override;
 

@@ -79,6 +79,19 @@ T &SLinkList<T>::at(const int index) {
 }
 
 template<typename T>
+void SLinkList<T>::set(const int index, T value) {
+	if (index < 0 || index >= length) {
+		throw std::out_of_range("Index out of range");
+	}
+
+	int link_index = (*static_list)[0].next;
+	for (int i = 0; i < index; ++i, link_index = (*static_list)[link_index].next) {
+	}
+	(*static_list)[link_index].data = value;
+}
+
+
+template<typename T>
 int SLinkList<T>::locate(const T &value) const {
 	int range_index = 0;
 	for (int i = 0; i < length && !(*static_list)[range_index].valid; ++i) {

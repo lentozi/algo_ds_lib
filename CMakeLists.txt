@@ -105,6 +105,12 @@ target_link_libraries(test_adjacency_list_graph gtest_main)
 add_test(NAME test_adjacency_list_graph COMMAND test_adjacency_list_graph)
 target_include_directories(test_adjacency_list_graph PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
+# SearchAlgorithm
+add_executable(test_search test/test_search.cpp)
+target_link_libraries(test_search gtest_main)
+add_test(NAME test_search COMMAND test_search)
+target_include_directories(test_search PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET test_sq_list PROPERTY CXX_STANDARD 11)
     set_property(TARGET test_link_list PROPERTY CXX_STANDARD 11)

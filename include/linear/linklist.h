@@ -23,6 +23,8 @@ public:
 
 	int locate(const T &value) const override;
 
+	void set(int index, T value);
+
 	[[nodiscard]] bool empty() const override;
 
 	[[nodiscard]] size_t size() const override;

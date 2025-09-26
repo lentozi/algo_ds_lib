@@ -63,6 +63,15 @@ int SqList<T>::locate(const T &value) const {
 }
 
 template<typename T>
+void SqList<T>::set(const int index, T value) {
+	if (index < 0 || index >= length) {
+		throw std::out_of_range("Index out of range");
+	}
+	(*data)[index] = value;
+}
+
+
+template<typename T>
 bool SqList<T>::empty() const {
 	return length == 0;
 }

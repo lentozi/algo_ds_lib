@@ -20,6 +20,8 @@ public:
 
 	virtual int locate(const T &value) const = 0;
 
+	virtual void set(int index, T value) = 0;
+
 	[[nodiscard]] virtual bool empty() const = 0;
 
 	[[nodiscard]] virtual size_t size() const = 0;

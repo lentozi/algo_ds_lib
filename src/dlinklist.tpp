@@ -98,6 +98,19 @@ int DLinkList<T>::locate(const T &value) const {
 }
 
 template<typename T>
+void DLinkList<T>::set(const int index, T value) {
+	if (index < 0 || index >= length) {
+		throw std::out_of_range("Index out of range");
+	}
+	DoubleNode<T> *current = head->next;
+	for (int i = 0; i < index; ++i) {
+		current = current->next;
+	}
+	current->data = value;
+}
+
+
+template<typename T>
 bool DLinkList<T>::empty() const {
 	return length == 0;
 }
