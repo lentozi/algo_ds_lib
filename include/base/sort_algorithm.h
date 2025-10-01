@@ -17,4 +17,5 @@ public:
 
 #include "sort/heap_sort.h"
 #include "sort/insert_sort.h"
+#include "sort/select_sort.h"
 #include "sort/binary_insert_sort.h"

@@ -7,25 +7,6 @@ template<typename T>
 InsertSort<T>::InsertSort(LinearStructure<T> *input_line)
     : SortAlgorithm<T>(input_line) {}
 
-// TODO 这是选择排序！！！
-// template<typename T>
-// void InsertSort<T>::sort(bool asc) const {
-//     for (int i = 0; i < this->linear_structure->size() - 1; ++i) {
-//         int flag = i;
-//         for (int j = i + 1; j < this->linear_structure->size(); ++j) {
-//             // 正序时，从无序列表中找到最小的元素；倒序时，从无序列表中找到最大的元素
-//             if ((asc && this->linear_structure->at(j) < this->linear_structure->at(flag))
-//                 || (!asc && this->linear_structure->at(j) > this->linear_structure->at(flag))) {
-//                 flag = j;
-//             }
-//         }
-//         if (flag != i) {
-//             T temp = this->linear_structure->at(i);
-//             this->linear_structure->set(i, this->linear_structure->at(flag));
-//             this->linear_structure->set(flag, temp);
-//         }
-//     }
-// }
 template<typename T>
 void InsertSort<T>::sort(const bool asc) const {
     if (this->linear_structure->size() <= 2) {
