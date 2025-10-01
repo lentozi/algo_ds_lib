@@ -142,4 +142,27 @@ TEST(SortTest, Sort) {
 
     delete quick_sorter;
     delete list;
+
+    list = new SqList<int>("SequenceList", 10);
+    list->insert(0, 8);
+    list->insert(1, 9);
+    list->insert(1, 7);
+    list->insert(1, 20);
+    list->insert(1, 5);
+    list->insert(1, 11);
+    list->insert(1, 2);
+
+    const auto* merge_sorter = new MergeSort(list);
+    merge_sorter->sort(true);
+
+    EXPECT_EQ(list->at(0), 2);
+    EXPECT_EQ(list->at(1), 5);
+    EXPECT_EQ(list->at(2), 7);
+    EXPECT_EQ(list->at(3), 8);
+    EXPECT_EQ(list->at(4), 9);
+    EXPECT_EQ(list->at(5), 11);
+    EXPECT_EQ(list->at(6), 20);
+
+    delete merge_sorter;
+    delete list;
 }
