@@ -16,6 +16,7 @@ public:
 };
 
 #include "sort/heap_sort.h"
+#include "sort/quick_sort.h"
 #include "sort/insert_sort.h"
 #include "sort/select_sort.h"
 #include "sort/bubble_sort.h"
