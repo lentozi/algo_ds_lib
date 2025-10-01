@@ -15,5 +15,6 @@ public:
     virtual void sort(bool asc) const = 0;
 };
 
+#include "sort/heap_sort.h"
 #include "sort/insert_sort.h"
 #include "sort/binary_insert_sort.h"
